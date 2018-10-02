@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata: 
+  name: svc3
+spec: 
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        app: svc3
+    spec: 
+      containers: 
+        - image: "gokul93/hello-world:latest"
+          imagePullPolicy: Always
+          name: svc3-container
+          ports: 
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: svc3-svc
+spec: 
+  ports: 
+     -  port: 8080
+        protocol: TCP
+        targetPort: 8080
+  selector: 
+    app: svc3
+  type: LoadBalancer
